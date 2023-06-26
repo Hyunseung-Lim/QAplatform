@@ -4,15 +4,21 @@ import {
   Routes,
 } from 'react-router-dom';
 import { MainPage } from './Pages/MainPage';
+import { LoginPage } from './Pages/LoginPage';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <div>
-        
-      </div>
-    </div>
+    <Router>
+      <div className="App">
+        <div>
+          <Routes>
+            <Route path='/' element={<LoginPage/>} />
+            <Route path='/main' element={<MainPage/>} />
+          </Routes>        
+        </div>
+      </div>      
+    </Router>
   );
 }
 

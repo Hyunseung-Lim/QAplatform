@@ -1,0 +1,148 @@
+.loginPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginPage > .title {
+    margin-top: 200px;
+    display: flex;
+    font-family: 'Inter';
+    align-items: center;
+    color: #A42C25;
+    font-size: 40px;
+}
+
+.loginPage > .title > .ask {
+    font-weight: 700;
+}
+
+.loginPage > .loginBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+
+    width: 500px;
+    border: solid 1px #D8D8D8;
+    border-radius: 10px;
+    padding: 30px 20px;
+}
+
+.loginPage > .loginBox > input {
+    width: 400px;
+    height: 36px;
+    margin-top: 14px;
+    border: solid 1px #D8D8D8;
+    border-radius: 8px;
+    padding-left: 10px;
+    font-size: 14px;
+}
+
+.loginPage > .loginBox > input:focus {
+    border: solid 1px #585858;
+    outline: none;
+}
+
+.loginPage > .loginBox > button {
+    height: 40px;
+    width: 414px;
+    margin: 14px;
+    background-color: #A42C25;
+    border: 0px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.loginPage > .loginBox > button:hover {
+    background-color: #902822;
+}
+
+
+.mainPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mainPage > .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1080px;
+}
+
+.mainPage > .container > .title {
+    width: 100%;
+    display: flex;
+    font-weight: 700;
+    font-size: 28px;
+    margin-top: 50px;
+    font-family: 'Inter';
+}
+
+.mainPage > .container > .authors {
+    width: 100%;
+    display: flex;
+    text-align: left;
+    margin-top: 16px;
+    font-size: 16px;
+    color: #0602EE;
+    font-family: 'Inter';
+}
+
+.mainPage > .container > .previewContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 6px;
+}
+
+.mainPage > .container > .subtitle {
+    width: 100%;
+    display: flex;    
+    margin-top: 24px;
+    font-weight: 700;
+    font-family: 'Inter';
+}
+
+.mainPage > .container > .inputContainer {
+    width: 100%;
+    display: flex;    
+    margin-top: 20px;
+    justify-content: space-between;
+}
+
+.mainPage > .container > .inputContainer > input {
+    width: 88%;
+    border: 0px;
+    border-radius: 8px;
+    height: 42px;
+    background-color: #F6F6F6;
+    padding-left: 12px;
+    font-size: 14px;
+    font-family: 'Inter';
+}
+
+.mainPage > .container > .inputContainer > input:focus {
+    outline: none;
+    border: none;
+}
+
+.mainPage > .container > .inputContainer > button {
+    width: 100px;
+    border: 0px;
+    border-radius: 8px;
+    height: 42px;
+    background-color: #A42C25;
+    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    font-family: 'Inter';
+}
+
+.mainPage > .container > .inputContainer > button:hover {
+    background-color: #902822;
+}

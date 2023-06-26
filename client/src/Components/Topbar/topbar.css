@@ -1,0 +1,21 @@
+.topbar {
+    display: flex;
+    height: 50px;
+    width: 100%;
+    background: linear-gradient(90deg, #A42C25, #5D6DF3);
+    font-size: 32px;
+    color: white;
+    font-family: 'Inter';
+    align-items: center;
+}
+
+.topbar > .logo {
+    margin-left: 40px;
+    width: 36px;
+    height: 36px;
+    margin-right: 10px;
+}
+
+.topbar > .ask {
+    font-weight: 700;
+}
