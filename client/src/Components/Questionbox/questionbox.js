@@ -18,7 +18,7 @@ export const Questionbox = (props) => {
                             <div>
                                 toggle
                             </div>
-                            <button>delete</button>                        
+                            <button>delete</button>
                         </div>
                     </div>
                     <div className='answerbox'>

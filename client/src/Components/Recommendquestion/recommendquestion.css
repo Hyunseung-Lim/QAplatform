@@ -1,0 +1,9 @@
+.recommendquestionbox {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 20px 10px;
+    border-radius: 10px;
+    width: 1038px;
+    border: solid 1px #D8D8D8;
+}

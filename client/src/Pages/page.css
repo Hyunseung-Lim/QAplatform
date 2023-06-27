@@ -20,6 +20,7 @@
 .loginPage > .loginBox {
     display: flex;
     flex-direction: column;
+    
     align-items: center;
     margin-top: 30px;
 
@@ -44,16 +45,21 @@
     outline: none;
 }
 
-.loginPage > .loginBox > button {
+.loginPage > .loginBox > .submitbutton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 40px;
     width: 414px;
     margin: 14px;
+    padding-top: 2px;
     background-color: #A42C25;
     border: 0px;
     border-radius: 8px;
     color: white;
     font-weight: 700;
     font-size: 15px;
+    text-decoration: none;
 }
 
 .loginPage > .loginBox > button:hover {
@@ -145,4 +151,15 @@
 
 .mainPage > .container > .inputContainer > button:hover {
     background-color: #902822;
+}
+
+.mainPage > .container > .recommendContainer {
+    width: 100%;
+}
+
+.mainPage > .footer {
+    width: 100%;
+    margin-top: 100px;
+    height: 100px;
+    background-color: #F6F6F6;
 }

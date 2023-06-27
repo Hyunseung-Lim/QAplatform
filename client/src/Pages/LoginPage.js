@@ -1,10 +1,25 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import { Topbar } from '../Components/Topbar/topbar';
 import './page.css'
 
 
 export const LoginPage = (props) => {
+
+    const[username, setUsername] = useState("");
+    const[url, setUrl] = useState("");
+
+    const usernameHandler = (e) => {
+        e.preventDefault();
+        setUsername(e.target.value);
+    }
+
+    const urlHandler = (e) => {
+        e.preventDefault();
+        setUrl(e.target.value);
+    }
+
     return(
         <>
             <div className='loginPage'>
@@ -18,9 +33,15 @@ export const LoginPage = (props) => {
                     </div>
                 </div>
                 <div className='loginBox'>
-                    <input placeholder='Enter your name'></input>
-                    <input placeholder='Enter the arxiv link of your paper'></input>
-                    <button>Submit</button>
+                    <input value={username} onChange={usernameHandler} placeholder='Enter your name'></input>
+                    <input value={url} onChange={urlHandler} placeholder='Enter the arxiv link of your paper'></input>
+                    <Link 
+                        to = '/main'
+                        state = {{ url: url }} 
+                        className='submitbutton'
+                    >
+                        <div>Submit</div>
+                    </Link>
                 </div>
             </div>
         </>
