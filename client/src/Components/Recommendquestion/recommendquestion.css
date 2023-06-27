@@ -7,3 +7,7 @@
     width: 1038px;
     border: solid 1px #D8D8D8;
 }
+
+.recommendquestionbox > .recommendquestion {
+    text-align: left;
+}

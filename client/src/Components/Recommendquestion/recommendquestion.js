@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import './recommendquestion.css'
 
 
@@ -7,11 +7,11 @@ export const Recommendquestion = (props) => {
         <>
             <div className='recommendquestionbox'>
                 <div className='recommendquestion'>
-                    What is the key contribution?
+                    {props.question}
                 </div>
-                <div>
-                    check
-                </div>
+                <button onClick={props.addRecommendQuestion}>
+                    add
+                </button>
             </div>
         </>
     )

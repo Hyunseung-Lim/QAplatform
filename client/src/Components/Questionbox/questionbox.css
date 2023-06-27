@@ -2,7 +2,7 @@
     width: 1038px;
     border: solid 1px #D8D8D8;
     border-radius: 10px;
-    margin: 10px;
+    margin: 20px;
     padding: 30px 15px 30px 30px;
     display: flex;
 }
@@ -23,6 +23,9 @@
 .questionbox > .contatiner > .questionbar > .question {
     font-family: 'Inter';
     font-weight: 700;
+    text-align: left;
+    width: 760px;
+    margin-right: 20px;
 }
 
 .questionbox > .contatiner > .questionbar > .buttons {
@@ -50,15 +53,46 @@
     margin-top: 10px;
     padding: 24px;
     text-align: left;
+    font-size: 16px;
+    font-family: 'Inter';
+}
+
+.questionbox > .contatiner > .answerbox > .answer > .editAnswer {
+    width: 100%;
+    padding: 0px;
+    overflow: hidden;
+    resize: none;
+    border: none;
+    outline: none;
+    background-color: #FBFBFB;
+    font-size: 16px;
+    font-family: 'Inter';
 }
 
 .questionbox > .contatiner > .answerbox > .buttonContainer {
+    margin-top: 30px;
     display: flex;
     justify-content: flex-end;
 }
 
+.questionbox > .contatiner > .answerbox > .buttonContainer > .editBtns > .cancelBtn {
+    margin-right: 8px;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: solid 1px #969696;
+    background-color: white;
+    color: #969696;
+}
+
+.questionbox > .contatiner > .answerbox > .buttonContainer > .editBtns > .completeBtn {
+    padding: 6px 14px;
+    border-radius: 6px;    
+    border: none;
+    background-color: #A42C25;
+    color: white;
+}
+
 .questionbox > .contatiner > .answerbox > .buttonContainer > button {
-    margin-top: 30px;
     background: none;
     border: 0px;
     text-decoration: underline;

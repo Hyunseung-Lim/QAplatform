@@ -1,3 +1,7 @@
+:root {
+    --vh: 1vh;
+}
+
 .loginPage {
     display: flex;
     flex-direction: column;
@@ -78,6 +82,7 @@
     flex-direction: column;
     align-items: center;
     width: 1080px;
+    min-height: calc(100 * var(--vh) - 250px);
 }
 
 .mainPage > .container > .title {
@@ -87,6 +92,7 @@
     font-size: 28px;
     margin-top: 50px;
     font-family: 'Inter';
+    text-align: left;
 }
 
 .mainPage > .container > .authors {
@@ -157,7 +163,19 @@
     width: 100%;
 }
 
+.mainPage > .container > .questionContainer > .noQuestion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10vh;
+    margin-top: 10vh;
+    width: 100%;
+    color: #a0a0a0;
+    font-family: 'Inter';
+}
+
 .mainPage > .footer {
+    bottom: 0;
     width: 100%;
     margin-top: 100px;
     height: 100px;
