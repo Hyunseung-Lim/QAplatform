@@ -16,6 +16,7 @@ export const MainPage = (props) => {
     const[authors, setAuthors] = useState([]);
     const[currentQuestion, setCurrentQuestion] = useState("");
     const[recommendQs, setRecommendQs] = useState([]);
+    const[loadRQs, setLoadRQs] = useState(false);
     const[QnAs, setQnAs] = useState([]);
 
     useEffect(() => {
@@ -38,13 +39,15 @@ export const MainPage = (props) => {
     }
 
     const generateQuestion = async () => {
+        setLoadRQs(true);
         try {
             const getApi = 'https://qna-restapi-dxpyj.run.goorm.site/getQuestion/' + String(url).split('/').pop();
             const result = await axios(getApi);
             setRecommendQs(result.data.questions);
         } catch (error) {
             console.error('Error:', error);
-        }        
+        }
+        setLoadRQs(false);
     }
 
     function addQuestion (question) {
@@ -78,6 +81,13 @@ export const MainPage = (props) => {
         ));
     }
 
+    function updatePublic (updateIndex, isPublic) {
+        setQnAs(prevData => (
+            prevData.map((QnA, index) => updateIndex === index ? {...QnA, isPublic: isPublic } : QnA)
+        ));
+        console.log(QnAs); 
+    }
+
     return(
         <>
             <div className='mainPage'>
@@ -105,15 +115,18 @@ export const MainPage = (props) => {
                         Question Recommendation
                     </div>
                     <div className='recommendContainer'>
-                        <button onClick={generateQuestion}>Recommend Question</button>
-                        {recommendQs.map((rQ, index) => (<Recommendquestion question={rQ} addRecommendQuestion={() => addRecommendQuestion(rQ, index)}/>))}
+                        <button className='recommendBtn' disabled={loadRQs} onClick={generateQuestion}>Recommend Question</button>
+                        {loadRQs ? <img className='loading' src="images/loading.gif" alt="loading" /> : recommendQs.map((rQ, index) => (<Recommendquestion question={rQ} addRecommendQuestion={() => addRecommendQuestion(rQ, index)}/>))}
                     </div>
                     <div className='subtitle'>
                         QnA
+                        <button>
+                            Edit Order
+                        </button>
                     </div>
                     <div className='questionContainer'>
                         { QnAs.length === 0 ? <div className='noQuestion'>No Question</div> : QnAs.map((QnA, index) => (
-                            <Questionbox key={index} question={QnA.question} answer={QnA.answer} isPublic={QnA.isPublic} updateAnswer={(newAnswer)=>updateAnswer(index, newAnswer)} deleteQuestion={() => deleteQuestion(index)}/>
+                            <Questionbox key={index} question={QnA.question} answer={QnA.answer} isPublic={QnA.isPublic} updateAnswer={(newAnswer)=>updateAnswer(index, newAnswer)} updatePublic={(isPublic)=>updatePublic(index, isPublic)} deleteQuestion={() => deleteQuestion(index)}/>
                         ))}
                     </div>
                 </div>

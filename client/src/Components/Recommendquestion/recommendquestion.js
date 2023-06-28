@@ -9,8 +9,8 @@ export const Recommendquestion = (props) => {
                 <div className='recommendquestion'>
                     {props.question}
                 </div>
-                <button onClick={props.addRecommendQuestion}>
-                    add
+                <button className='addBtn' onClick={props.addRecommendQuestion}>
+                    Add +
                 </button>
             </div>
         </>

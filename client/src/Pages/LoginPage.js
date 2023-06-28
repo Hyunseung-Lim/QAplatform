@@ -8,7 +8,7 @@ import './page.css'
 export const LoginPage = (props) => {
 
     const[username, setUsername] = useState("");
-    const[url, setUrl] = useState("");
+    const[url, setUrl] = useState("https://arxiv.org/abs/2305.11583");
 
     const usernameHandler = (e) => {
         e.preventDefault();

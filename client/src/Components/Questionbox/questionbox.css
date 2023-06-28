@@ -41,8 +41,13 @@
     margin-right: 20px;
 }
 
-.questionbox > .contatiner > .questionbar > .buttons > button {
+.questionbox > .contatiner > .questionbar > .buttons > .deleteBtn {
     margin-left: 20px;
+    width: 34px;
+}
+
+.questionbox > .contatiner > .questionbar > .buttons > .deleteBtn:hover {
+    content: url(../../../public/images/trash_hover.png);
 }
 
 

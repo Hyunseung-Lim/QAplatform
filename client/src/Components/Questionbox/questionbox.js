@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect} from 'react'
 import './questionbox.css'
 import TextareaAutosize from 'react-autosize-textarea';
-
+import ToggleButton from 'react-toggle-button';
 
 
 export const Questionbox = (props) => {
-
     const [isEdit, setIsEdit] = useState(false);
+    const [isPublic, setIsPublic] = useState(false);
     const [prevAnswer, setPrevAnswer] = useState("");
     const [currentAnswer, setCurrentAnser] = useState("");
     const textAreaRef = useRef(null);
@@ -14,6 +14,7 @@ export const Questionbox = (props) => {
     useEffect(() => {
         setPrevAnswer(props.answer);
         setCurrentAnser(props.answer);
+        setIsPublic(props.isPublic);
     }, [])
 
     useEffect(() => {
@@ -46,6 +47,11 @@ export const Questionbox = (props) => {
         setIsEdit(false);
     }
 
+    function changePublic(isPublic) {
+        props.updatePublic(!isPublic);
+        setIsPublic(!isPublic);
+    }
+
     return(
         <>
             <div className='questionbox'>
@@ -58,10 +64,31 @@ export const Questionbox = (props) => {
                             <div className='makepublic'>
                                 make public
                             </div>
-                            <div>
-                                toggle
-                            </div>
-                            <button onClick={props.deleteQuestion}>delete</button>
+                            <ToggleButton
+                                inactiveLabel={''}
+                                activeLabel={''}
+                                colors={{
+                                    activeThumb: {
+                                        base: 'rgb(164,44,37)'
+                                    },
+                                    inactiveThumb: {
+                                        base: 'rgb(190,154,152)'
+                                    },
+                                    active: {
+                                        base: 'rgb(234,209,207)',
+                                        hover: 'rgb(242,217,215)'
+                                    },
+                                    inactive: {
+                                        base: 'rgb(234,209,207)',
+                                        hover: 'rgb(242,217,215)'
+                                    }
+                                }}
+                                value={ isPublic }
+                                onToggle={(value) => {
+                                    changePublic(value);
+                                }} 
+                                />
+                            <img src="images/trash.png" className='deleteBtn' onClick={props.deleteQuestion}/>
                         </div>
                     </div>
                     <div className='answerbox'>

@@ -99,7 +99,7 @@
     width: 100%;
     display: flex;
     text-align: left;
-    margin-top: 16px;
+    margin-top: 10px;
     font-size: 16px;
     color: #0602EE;
     font-family: 'Inter';
@@ -114,7 +114,8 @@
 
 .mainPage > .container > .subtitle {
     width: 100%;
-    display: flex;    
+    display: flex;
+    justify-content: space-between;
     margin-top: 24px;
     font-weight: 700;
     font-family: 'Inter';
@@ -151,7 +152,7 @@
     background-color: #A42C25;
     color: white;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 16px;
     font-family: 'Inter';
 }
 
@@ -160,7 +161,36 @@
 }
 
 .mainPage > .container > .recommendContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
+}
+.mainPage > .container > .recommendContainer > .recommendBtn {
+    margin: 10px 0 15px;
+    border: 0;
+    border-radius: 8px;
+    color: white;
+    background-color: #5D6DF3;
+    height: 42px;
+    padding: 0 24px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Inter';
+}
+
+.mainPage > .container > .recommendContainer > .recommendBtn:hover {
+    background-color: #525ed1;
+}
+
+.mainPage > .container > .recommendContainer > .recommendBtn:disabled {
+    background-color: #525ed1;
+}
+
+.mainPage > .container > .recommendContainer > .loading {
+    margin: 20px 0 10px;
+    width: 36px;
+    height: 36px;
 }
 
 .mainPage > .container > .questionContainer > .noQuestion {

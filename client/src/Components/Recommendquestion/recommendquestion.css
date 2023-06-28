@@ -1,7 +1,8 @@
 .recommendquestionbox {
-    margin-top: 10px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 12px 20px 10px;
     border-radius: 10px;
     width: 1038px;
@@ -10,4 +11,21 @@
 
 .recommendquestionbox > .recommendquestion {
     text-align: left;
+    width: 92%;
+}
+
+.recommendquestionbox > .addBtn {
+    border: 0;
+    border-radius: 6px;
+    color: white;
+    background-color: #A42C25;
+    font-family: 'Inter';
+    font-size: 13px;
+    font-weight: 600;
+    padding: 0 16px;
+    height: 30px;
+}
+
+.recommendquestionbox > .addBtn:hover {
+    background-color: #902822;
 }
