@@ -9,6 +9,7 @@
 
 .questionbox > .contatiner {
     width: 100%;
+    margin-right: 15px;
 }
 
 
@@ -110,7 +111,6 @@
 
 .questionbox > .handle {
     margin: auto;
-    margin-left: 20px;
     width: 13px;
     height: 20px;
 }

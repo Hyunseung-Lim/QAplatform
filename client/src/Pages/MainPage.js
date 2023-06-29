@@ -13,10 +13,11 @@ export const MainPage = (props) => {
     const location = useLocation();
     const { url } = location.state;
     const[title, setTitle] = useState("Title of Research Paper");
-    const[authors, setAuthors] = useState([]);
+    const[authors, setAuthors] = useState("");
     const[currentQuestion, setCurrentQuestion] = useState("");
     const[recommendQs, setRecommendQs] = useState([]);
     const[loadRQs, setLoadRQs] = useState(false);
+    const[isEditOrder, setIsEditOrder] = useState(false);
     const[QnAs, setQnAs] = useState([]);
 
     useEffect(() => {
@@ -25,7 +26,7 @@ export const MainPage = (props) => {
                 const getApi = 'https://qna-restapi-dxpyj.run.goorm.site/getMeta/' + String(url).split('/').pop();
                 const result = await axios(getApi);
                 setTitle(String(result.data.meta[0]));
-                setAuthors(result.data.meta[2]);
+                setAuthors(result.data.meta[2].join(", "));
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -88,6 +89,11 @@ export const MainPage = (props) => {
         console.log(QnAs); 
     }
 
+    function changeIsEditOrder () {
+        setIsEditOrder(!isEditOrder);
+        console.log(isEditOrder);
+    }
+
     return(
         <>
             <div className='mainPage'>
@@ -97,11 +103,11 @@ export const MainPage = (props) => {
                         {title}
                     </div>
                     <div className='authors'>
-                        {authors.map((author, index, arr) => (<span key={index}>{author}{index < arr.length - 1 ? ', ' : ''}</span>))}
+                        {authors}
                     </div>
                     <div className='previewContainer'>
-                        <button>
-                            preview
+                        <button className='previewBtn'>
+                            Preview
                         </button>
                     </div>
                     <div className='subtitle'>
@@ -120,13 +126,13 @@ export const MainPage = (props) => {
                     </div>
                     <div className='subtitle'>
                         QnA
-                        <button>
-                            Edit Order
+                        <button className='editOrderBtn' onClick={changeIsEditOrder}>
+                            ⇅ Edit Order
                         </button>
                     </div>
                     <div className='questionContainer'>
                         { QnAs.length === 0 ? <div className='noQuestion'>No Question</div> : QnAs.map((QnA, index) => (
-                            <Questionbox key={index} question={QnA.question} answer={QnA.answer} isPublic={QnA.isPublic} updateAnswer={(newAnswer)=>updateAnswer(index, newAnswer)} updatePublic={(isPublic)=>updatePublic(index, isPublic)} deleteQuestion={() => deleteQuestion(index)}/>
+                            <Questionbox key={index} question={QnA.question} answer={QnA.answer} isPublic={QnA.isPublic} isEditOrder={isEditOrder} updateAnswer={(newAnswer)=>updateAnswer(index, newAnswer)} updatePublic={(isPublic)=>updatePublic(index, isPublic)} deleteQuestion={() => deleteQuestion(index)}/>
                         ))}
                     </div>
                 </div>
