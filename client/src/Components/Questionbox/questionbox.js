@@ -7,7 +7,7 @@ import ToggleButton from 'react-toggle-button';
 export const Questionbox = (props) => {
     const [isEdit, setIsEdit] = useState(false);
     const [isPublic, setIsPublic] = useState(false);
-    const [isEditOrder, setIsEditOrder] = useState(false);
+    // const [isWaitAnswer, setIsWaitAnswer] = useState(false);
     const [prevAnswer, setPrevAnswer] = useState("");
     const [currentAnswer, setCurrentAnser] = useState("");
     const textAreaRef = useRef(null);
@@ -16,10 +16,10 @@ export const Questionbox = (props) => {
         setPrevAnswer(props.answer);
         setCurrentAnser(props.answer);
         setIsPublic(props.isPublic);
-        setIsEditOrder(props.isEditOrder);
-        if(props.isEditOrder === false) {
-            cancelAnswer();
-        }
+        // setIsWaitAnswer(props.isWaitAnswer);
+        // if(props.isWaitAnswer === false) {
+        //     cancelAnswer();
+        // }
     }, [])
 
     useEffect(() => {
@@ -28,12 +28,12 @@ export const Questionbox = (props) => {
         }
     }, [currentAnswer]);
 
-    useEffect(()=> {
-        setIsEditOrder(props.isEditOrder);
-        if(props.isEditOrder === false) {
-            cancelAnswer();
-        }
-    }, [props.isEditOrder]);
+    // useEffect(()=> {
+    //     setIsWaitAnswer(props.isWaitAnswer);
+    //     if(props.isWaitAnswer === false) {
+    //         cancelAnswer();
+    //     }
+    // }, [props.isWaitAnswer]);
 
     const currentAnswerHandler = (e) => {
         e.preventDefault();
@@ -72,7 +72,7 @@ export const Questionbox = (props) => {
                         <div className='question'>
                             {props.question}
                         </div>
-                        {isEditOrder ? <div className='buttons'>
+                        <div className='buttons'>
                             <div className='makepublic'>
                                 make public
                             </div>
@@ -101,22 +101,20 @@ export const Questionbox = (props) => {
                                 }} 
                                 />
                             <img src="images/trash.png" className='deleteBtn' onClick={props.deleteQuestion}/>
-                        </div> : null}
+                        </div>
                     </div>
                     <div className='answerbox'>
                         <div className='answer'>
                             {isEdit ? <TextareaAutosize className='editAnswer' ref={textAreaRef} value={currentAnswer} onChange={currentAnswerHandler} onResize={(e) => {}}/> : <div>{props.answer}</div>}
                         </div>
-                        {isEditOrder ?
-                            <div className='buttonContainer'>
-                                {isEdit ? <div className='editBtns'><button className='cancelBtn' onClick={cancelAnswer}>cancel</button> <button className='completeBtn' onClick={changeAnswer}>complete</button></div> : <button onClick={changeIsEdit}>Edit the Answer</button>}
-                            </div>
-                            : null
-                        }
+                        
+                        <div className='buttonContainer'>
+                            {isEdit ? <div className='editBtns'><button className='cancelBtn' onClick={cancelAnswer}>cancel</button> <button className='completeBtn' onClick={changeAnswer}>complete</button></div> : <button onClick={changeIsEdit}>Edit the Answer</button>}
+                        </div>
+                            
                     </div>
                 </div>
                 <img key={props.id} className='handle' src="images/handle.svg" alt="handle" {...props.handle}/>
-                {/* {isEditOrder ? null : <img className='handle' src="images/handle.png" alt="handle" />} */}
             </div>
         </>
     )

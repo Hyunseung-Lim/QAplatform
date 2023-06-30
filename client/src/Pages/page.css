@@ -241,3 +241,33 @@
     height: 100px;
     background-color: #F6F6F6;
 }
+
+.tempoQuestionbox {
+    width: 1038px;
+    border: solid 1px #D8D8D8;
+    border-radius: 10px;
+    margin: 20px;
+    padding: 30px 15px 30px 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.tempoQuestionbox > .questionbar {
+    font-family: 'Inter';
+    font-weight: 700;
+    text-align: left;
+    width: 760px;
+    margin-right: 20px;
+}
+
+.tempoQuestionbox > .answerbox {
+    display: flex;
+    flex-direction: column;
+    background-color: #FBFBFB;
+    border-radius: 10px;
+    margin-top: 10px;
+    padding: 24px;
+    text-align: left;
+    font-size: 16px;
+    font-family: 'Inter';
+}

@@ -16,9 +16,19 @@ const reorder = (array, fromIndex, toIndex) => {
     return array;
 };
 
-export const MainPage = (props) => {
+const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-    const API_DOMAIN = "https://lucydata.lgresearch.ai";
+const generateRandomKey = (length) => {
+    let result = ' ';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return result;
+}
+
+export const MainPage = (props) => {
 
     const location = useLocation();
     const { url } = location.state;
@@ -27,8 +37,8 @@ export const MainPage = (props) => {
     const[currentQuestion, setCurrentQuestion] = useState("");
     const[recommendQs, setRecommendQs] = useState([]);
     const[loadRQs, setLoadRQs] = useState(false);
-    const[isEditOrder, setIsEditOrder] = useState(true);
     const[QnAs, setQnAs] = useState([]);
+    const[waitQList, setWaitQList] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -62,24 +72,19 @@ export const MainPage = (props) => {
     }
 
     async function addQuestion (question) {
-        const answer = "Answer is being generated...";
+        var id = generateRandomKey(5);
+        setWaitQList(prevData => [...prevData, {id: id, question: question}]);
 
-        await axios.post(API_DOMAIN + "/get_lucy_answer", {
-            "question": question, 
-            "title": title
-        },
-        {
-            headers: {
-                "Content-Type": "application/json"
-            }
-        },
-        { withCredentials: true }
-        )
+        await axios({
+            method: "POST",
+            url:"https://port-0-authorplatfomserver-7xwyjq992lljff6sw0.sel4.cloudtype.app/get_lucy_answer",
+            data: { question: question, title: title}
+        })
         .then((response) => {
             const res =response.data;
-            console.log(res.lucy_answer);
             setQnAs(prevData => [...prevData, {question: String(question), answer: String(res.lucy_answer), isPublic: false}]);
-        })        
+            setWaitQList(prevData => prevData.filter((item, i) => item.id !== id));
+        })
     }
 
     function deleteQuestion (index) {
@@ -112,14 +117,7 @@ export const MainPage = (props) => {
         setQnAs(prevData => (
             prevData.map((QnA, index) => updateIndex === index ? {...QnA, isPublic: isPublic } : QnA)
         ));
-        console.log(QnAs); 
     }
-
-    function changeIsEditOrder () {
-        setIsEditOrder(!isEditOrder);
-        console.log(isEditOrder);
-    }
-
 
     function onDragEnd(result) {
         // dropped outside the list
@@ -164,16 +162,13 @@ export const MainPage = (props) => {
                     </div>
                     <div className='recommendContainer'>
                         <button className='recommendBtn' disabled={loadRQs} onClick={generateQuestion}>Recommend Question</button>
-                        {loadRQs ? <img className='loading' src="images/loading.gif" alt="loading" /> : recommendQs.map((rQ, index) => (<Recommendquestion question={rQ} addRecommendQuestion={() => addRecommendQuestion(rQ, index)}/>))}
+                        {loadRQs ? <img className='loading' src="images/loading.gif" alt="loading" /> : recommendQs.map((rQ, index) => (<Recommendquestion key={index} question={rQ} addRecommendQuestion={() => addRecommendQuestion(rQ, index)}/>))}
                     </div>
                     <div className='subtitle'>
                         QnA
-                        {/* <button className='editOrderBtn' onClick={changeIsEditOrder}>
-                            ⇅ Edit Order
-                        </button> */}
                     </div>
                     <DragDropContext className='questionContainer' onDragEnd={onDragEnd}>
-                        { QnAs.length === 0 ? <div className='noQuestion'>No Question</div> 
+                        { (QnAs.length === 0 && waitQList.length === 0) ? <div className='noQuestion'>No Question</div> 
                             :
                             <Droppable droppableId="droppable">
                                 {(provided, snapshot) => (
@@ -189,7 +184,7 @@ export const MainPage = (props) => {
                                                 ref={provided.innerRef}
                                                 {...provided.draggableProps}
                                                 >
-                                                    <Questionbox key={index} id={String(QnA.question + index)} question={QnA.question} answer={QnA.answer} isPublic={QnA.isPublic} isEditOrder={isEditOrder} updateAnswer={(newAnswer)=>updateAnswer(index, newAnswer)} updatePublic={(isPublic)=>updatePublic(index, isPublic)} deleteQuestion={() => deleteQuestion(index)} handle={provided.dragHandleProps}/>
+                                                    <Questionbox key={index} id={String(QnA.question + index)} question={QnA.question} answer={QnA.answer} isPublic={QnA.isPublic} updateAnswer={(newAnswer)=>updateAnswer(index, newAnswer)} updatePublic={(isPublic)=>updatePublic(index, isPublic)} deleteQuestion={() => deleteQuestion(index)} handle={provided.dragHandleProps}/>
                                                 </div>
                                             )}
                                         </Draggable>
@@ -199,6 +194,12 @@ export const MainPage = (props) => {
                                 )}
                             </Droppable>
                         }
+                        {waitQList.map((Q, index) => (
+                            <div className='tempoQuestionbox' key={index}>
+                                <div className='questionbar'>{Q.question}</div>
+                                <div className='answerbox'>Answer is being generated...</div>
+                            </div>
+                        ))}
                     </DragDropContext>
                 </div>
                 <div className='footer'>
