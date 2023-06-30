@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useLocation } from 'react-router-dom';
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 import { Topbar } from '../Components/Topbar/topbar';
 import { Questionbox } from '../Components/Questionbox/questionbox';
@@ -8,7 +9,16 @@ import { Recommendquestion } from '../Components/Recommendquestion/recommendques
 import './page.css'
 
 
+// a little function to help us with reordering the result
+const reorder = (array, fromIndex, toIndex) => {
+    const elementToMove = array.splice(fromIndex, 1)[0];
+    array.splice(toIndex, 0, elementToMove);
+    return array;
+};
+
 export const MainPage = (props) => {
+
+    const API_DOMAIN = "https://lucydata.lgresearch.ai";
 
     const location = useLocation();
     const { url } = location.state;
@@ -17,7 +27,7 @@ export const MainPage = (props) => {
     const[currentQuestion, setCurrentQuestion] = useState("");
     const[recommendQs, setRecommendQs] = useState([]);
     const[loadRQs, setLoadRQs] = useState(false);
-    const[isEditOrder, setIsEditOrder] = useState(false);
+    const[isEditOrder, setIsEditOrder] = useState(true);
     const[QnAs, setQnAs] = useState([]);
 
     useEffect(() => {
@@ -51,9 +61,25 @@ export const MainPage = (props) => {
         setLoadRQs(false);
     }
 
-    function addQuestion (question) {
-        const answer = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
-        setQnAs(prevData => [...prevData, {question: String(question), answer: String(answer), isPublic: false}]);
+    async function addQuestion (question) {
+        const answer = "Answer is being generated...";
+
+        await axios.post(API_DOMAIN + "/get_lucy_answer", {
+            "question": question, 
+            "title": title
+        },
+        {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        },
+        { withCredentials: true }
+        )
+        .then((response) => {
+            const res =response.data;
+            console.log(res.lucy_answer);
+            setQnAs(prevData => [...prevData, {question: String(question), answer: String(res.lucy_answer), isPublic: false}]);
+        })        
     }
 
     function deleteQuestion (index) {
@@ -94,6 +120,22 @@ export const MainPage = (props) => {
         console.log(isEditOrder);
     }
 
+
+    function onDragEnd(result) {
+        // dropped outside the list
+        if (!result.destination) {
+            return;
+        }
+        console.log("onDargEnd:", QnAs);
+        const newQnAs = reorder(
+            QnAs,
+            result.source.index,
+            result.destination.index
+        );
+        console.log(newQnAs);
+        setQnAs(newQnAs);
+    }
+
     return(
         <>
             <div className='mainPage'>
@@ -126,15 +168,38 @@ export const MainPage = (props) => {
                     </div>
                     <div className='subtitle'>
                         QnA
-                        <button className='editOrderBtn' onClick={changeIsEditOrder}>
+                        {/* <button className='editOrderBtn' onClick={changeIsEditOrder}>
                             ⇅ Edit Order
-                        </button>
+                        </button> */}
                     </div>
-                    <div className='questionContainer'>
-                        { QnAs.length === 0 ? <div className='noQuestion'>No Question</div> : QnAs.map((QnA, index) => (
-                            <Questionbox key={index} question={QnA.question} answer={QnA.answer} isPublic={QnA.isPublic} isEditOrder={isEditOrder} updateAnswer={(newAnswer)=>updateAnswer(index, newAnswer)} updatePublic={(isPublic)=>updatePublic(index, isPublic)} deleteQuestion={() => deleteQuestion(index)}/>
-                        ))}
-                    </div>
+                    <DragDropContext className='questionContainer' onDragEnd={onDragEnd}>
+                        { QnAs.length === 0 ? <div className='noQuestion'>No Question</div> 
+                            :
+                            <Droppable droppableId="droppable">
+                                {(provided, snapshot) => (
+                                    <div
+                                        {...provided.droppableProps}
+                                        ref={provided.innerRef}
+                                        // style={getListStyle(snapshot.isDraggingOver)}
+                                    >
+                                    {QnAs.map((QnA, index) => (
+                                        <Draggable key={String(QnA.question + index)} draggableId={String(QnA.question + index)} index={index}>
+                                            {(provided, snapshot) => (
+                                                <div
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                >
+                                                    <Questionbox key={index} id={String(QnA.question + index)} question={QnA.question} answer={QnA.answer} isPublic={QnA.isPublic} isEditOrder={isEditOrder} updateAnswer={(newAnswer)=>updateAnswer(index, newAnswer)} updatePublic={(isPublic)=>updatePublic(index, isPublic)} deleteQuestion={() => deleteQuestion(index)} handle={provided.dragHandleProps}/>
+                                                </div>
+                                            )}
+                                        </Draggable>
+                                    ))}
+                                    {provided.placeholder}
+                                    </div>
+                                )}
+                            </Droppable>
+                        }
+                    </DragDropContext>
                 </div>
                 <div className='footer'>
                 </div>

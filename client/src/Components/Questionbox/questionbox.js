@@ -115,7 +115,8 @@ export const Questionbox = (props) => {
                         }
                     </div>
                 </div>
-                {isEditOrder ? null : <img className='handle' src="images/handle.png" alt="handle" />}
+                <img key={props.id} className='handle' src="images/handle.svg" alt="handle" {...props.handle}/>
+                {/* {isEditOrder ? null : <img className='handle' src="images/handle.png" alt="handle" />} */}
             </div>
         </>
     )
