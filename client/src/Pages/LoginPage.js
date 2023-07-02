@@ -44,7 +44,7 @@ export const LoginPage = (props) => {
                     <input value={password} onChange={passwordHandler} placeholder='Enter password'></input>
                     <Link 
                         to = {password === 'test01' ? '/main' : '/'}
-                        state = {{ url: url }} 
+                        state = {{ url: url, username: username }} 
                         className='submitbutton'
                     >
                         <div>Submit</div>

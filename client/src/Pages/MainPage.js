@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import axios from 'axios';
 
 import { Topbar } from '../Components/Topbar/topbar';
 import { Questionbox } from '../Components/Questionbox/questionbox';
@@ -31,7 +31,7 @@ const generateRandomKey = (length) => {
 export const MainPage = (props) => {
 
     const location = useLocation();
-    const { url } = location.state;
+    const { url, username } = location.state;
     const[title, setTitle] = useState("Title of Research Paper");
     const[authors, setAuthors] = useState("");
     const[currentQuestion, setCurrentQuestion] = useState("");
@@ -51,7 +51,9 @@ export const MainPage = (props) => {
                 console.error('Error:', error);
             }
         };
-        fetchData();
+        if(title === "Title of Research Paper") {
+            fetchData();
+        }
     }, []);
 
     const currentQuestionHandler = (e) => {
@@ -146,9 +148,19 @@ export const MainPage = (props) => {
                         {authors}
                     </div>
                     <div className='previewContainer'>
-                        <button className='previewBtn'>
-                            Preview
-                        </button>
+                        <Link 
+                            to = {'/preview'}
+                            state = {{ 
+                                url: url,
+                                title: title,
+                                authors: authors,
+                                QnAs: QnAs,
+                                username: username
+                                }} 
+                            className='previewBtn'
+                        >
+                            <div>Preview</div>
+                        </Link>
                     </div>
                     <div className='subtitle'>
                         Add Question

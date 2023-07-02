@@ -1,6 +1,7 @@
 .questionbox {
-    width: 1038px;
+    width: 1033px;
     border: solid 1px #D8D8D8;
+    background-color: white;
     border-radius: 10px;
     margin: 20px;
     padding: 30px 15px 30px 30px;

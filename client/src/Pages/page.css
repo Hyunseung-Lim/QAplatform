@@ -120,7 +120,8 @@
     color: white;
     font-size: 14px;
     font-weight: 700;
-    font-family: 'Inter';    
+    font-family: 'Inter'; 
+    text-decoration: none;  
 }
 
 .mainPage > .container > .previewContainer > .previewBtn:hover {
@@ -223,6 +224,29 @@
     height: 32px;
 }
 
+.mainPage > .container > .linkBtnContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 20px;    
+}
+
+.mainPage > .container > .linkBtnContainer > .linkBtn {
+    border: 0px;
+    padding: 8px 16px;
+    border-radius: 6px; 
+    background-color: #A42C25;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    font-family: 'Inter';
+    text-decoration: none;
+}
+
+.mainPage > .container > .linkBtnContainer > .linkBtn:hover {
+    background-color: #902822;
+}
+
 .noQuestion {
     display: flex;
     align-items: center;
@@ -245,9 +269,10 @@
 .tempoQuestionbox {
     width: 1038px;
     border: solid 1px #D8D8D8;
+    background-color: white;
     border-radius: 10px;
-    margin: 20px;
-    padding: 30px 15px 30px 30px;
+    margin-bottom: 20px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
 }

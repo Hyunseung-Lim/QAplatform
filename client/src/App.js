@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import { MainPage } from './Pages/MainPage';
 import { LoginPage } from './Pages/LoginPage';
+import { PreviewPage } from './Pages/PreviewPage';
 import './App.css';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Routes>
             <Route path='/' element={<LoginPage/>} />
             <Route path='/main' element={<MainPage/>} />
+            <Route path='/preview' element={<PreviewPage/>}/>
           </Routes>        
         </div>
       </div>      
