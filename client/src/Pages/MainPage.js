@@ -87,6 +87,9 @@ export const MainPage = (props) => {
             setQnAs(prevData => [...prevData, {question: String(question), answer: String(res.lucy_answer), isPublic: false}]);
             setWaitQList(prevData => prevData.filter((item, i) => item.id !== id));
         })
+        .catch(error => {
+            setWaitQList(prevData => prevData.filter((item, i) => item.id !== id));
+        });
     }
 
     function deleteQuestion (index) {
@@ -206,12 +209,14 @@ export const MainPage = (props) => {
                                 )}
                             </Droppable>
                         }
-                        {waitQList.map((Q, index) => (
-                            <div className='tempoQuestionbox' key={index}>
-                                <div className='questionbar'>{Q.question}</div>
-                                <div className='answerbox'>Answer is being generated...</div>
-                            </div>
-                        ))}
+                        <div className='tempoQuestionboxContainer'>
+                            {waitQList.map((Q, index) => (
+                                <div className='tempoQuestionbox' key={index}>
+                                    <div className='questionbar'>{Q.question}</div>
+                                    <div className='answerbox'>Answer is being generated...</div>
+                                </div>
+                            ))}                            
+                        </div>
                     </DragDropContext>
                 </div>
                 <div className='footer'>

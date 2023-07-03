@@ -224,6 +224,10 @@
     height: 32px;
 }
 
+.mainPage > .container > .questionContainer {
+    margin-bottom: 20px;
+}
+
 .mainPage > .container > .linkBtnContainer {
     width: 100%;
     display: flex;
@@ -266,8 +270,11 @@
     background-color: #F6F6F6;
 }
 
-.tempoQuestionbox {
-    width: 1038px;
+.tempoQuestionboxContainer {
+}
+
+.tempoQuestionboxContainer > .tempoQuestionbox {
+    width: 1018px;
     border: solid 1px #D8D8D8;
     background-color: white;
     border-radius: 10px;
@@ -277,7 +284,7 @@
     flex-direction: column;
 }
 
-.tempoQuestionbox > .questionbar {
+.tempoQuestionboxContainer > .tempoQuestionbox > .questionbar {
     font-family: 'Inter';
     font-weight: 700;
     text-align: left;
@@ -285,7 +292,7 @@
     margin-right: 20px;
 }
 
-.tempoQuestionbox > .answerbox {
+.tempoQuestionboxContainer > .tempoQuestionbox > .answerbox {
     display: flex;
     flex-direction: column;
     background-color: #FBFBFB;
