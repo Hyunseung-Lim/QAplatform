@@ -12,16 +12,16 @@ export const Previewquestionbox = (props) => {
 
     return(
         <>
-            <div className='previewquestionbox'>
+            <div className='previewquestionbox' onClick={changeFold} >
                 <div className='contatiner'>
                     <div className='questionbar'>
                         <div className='question'>
                             {props.question}
                         </div>
                         {isfold ?
-                            <img src="images/down.png" onClick={changeFold} />
+                            <img src="images/down.png"/>
                             :
-                            <img src="images/up.png" onClick={changeFold} />
+                            <img src="images/up.png"/>
                         }
                     </div>
                     {isfold ? null : 

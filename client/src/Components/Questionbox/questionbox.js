@@ -94,6 +94,7 @@ export const Questionbox = (props) => {
                                 make public
                             </div>
                             <ToggleButton
+                                className='toggleBtn'
                                 inactiveLabel={''}
                                 activeLabel={''}
                                 colors={{
@@ -112,6 +113,9 @@ export const Questionbox = (props) => {
                                         hover: 'rgb(242,217,215)'
                                     }
                                 }}
+                                containerStyle={{width:'42px'}}
+                                trackStyle={{width:'42px'}}
+                                thumbAnimateRange={[0, 24]}
                                 value={ isPublic }
                                 onToggle={(value) => {
                                     changePublic(value);

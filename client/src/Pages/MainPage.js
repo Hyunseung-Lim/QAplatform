@@ -57,7 +57,9 @@ export const MainPage = (props) => {
                 })
                 .then ((response) => {
                     const res =response.data;
-                    setQnAs(res);
+                    if (res != null) {
+                        setQnAs(res);
+                    }
                 })
                 .catch(error =>{
                     console.log("error");
