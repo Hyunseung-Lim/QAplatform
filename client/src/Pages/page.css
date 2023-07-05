@@ -95,6 +95,15 @@
     text-align: left;
 }
 
+.mainPage > .container > .abstract {
+    width: 100%;
+    display: flex;
+    text-align: left;
+    margin-top: 20px;
+    font-size: 15px;
+    font-family: 'Inter';
+}
+
 .mainPage > .container > .authors {
     width: 100%;
     display: flex;
@@ -225,7 +234,7 @@
 }
 
 .mainPage > .container > .questionContainer {
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .mainPage > .container > .linkBtnContainer {

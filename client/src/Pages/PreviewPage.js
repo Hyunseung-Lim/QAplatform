@@ -9,7 +9,7 @@ import './page.css'
 export const PreviewPage = (props) => {
 
     const location = useLocation();
-    const { url, username, QnAs, title, authors } = location.state;
+    const { url, username, QnAs, title, authors, abstract } = location.state;
 
     return(
         <>
@@ -23,7 +23,7 @@ export const PreviewPage = (props) => {
                         {authors}
                     </div>
                     <div className='abstract'>
-
+                        {abstract}
                     </div>
                     <div className='linkBtnContainer'>
                         <Link to = {url} className='linkBtn' >Link to paper</Link >

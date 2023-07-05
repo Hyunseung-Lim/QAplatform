@@ -33,6 +33,7 @@ export const MainPage = (props) => {
     const location = useLocation();
     const { url, username } = location.state;
     const[title, setTitle] = useState("Title of Research Paper");
+    const[abstract, setAbstract] = useState("");
     const[authors, setAuthors] = useState("");
     const[currentQuestion, setCurrentQuestion] = useState("");
     const[recommendQs, setRecommendQs] = useState([]);
@@ -41,20 +42,49 @@ export const MainPage = (props) => {
     const[waitQList, setWaitQList] = useState([]);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const load_data = async () => {
             try {
                 const getApi = 'https://qna-restapi-dxpyj.run.goorm.site/getMeta/' + String(url).split('/').pop();
                 const result = await axios(getApi);
                 setTitle(String(result.data.meta[0]));
+                setAbstract(String(result.data.meta[1]));
                 setAuthors(result.data.meta[2].join(", "));
+                axios({
+                    method: "POST",
+                    url: "https://qna-restapi-dxpyj.run.goorm.site/getQestionsetData",
+                    data: {title: String(result.data.meta[0])},
+                    headers: {'Content-Type': 'application/json'}
+                })
+                .then ((response) => {
+                    const res =response.data;
+                    setQnAs(res);
+                })
+                .catch(error =>{
+                    console.log("error");
+                })
             } catch (error) {
                 console.error('Error:', error);
             }
         };
+
         if(title === "Title of Research Paper") {
-            fetchData();
+            load_data();
         }
     }, []);
+
+    useEffect(() => {
+        axios({
+            method: "POST",
+            url: "https://qna-restapi-dxpyj.run.goorm.site/uploadQuestionSet",
+            data: {title: title, question_set: QnAs, user: username},
+            headers: {'Content-Type': 'application/json'}
+        })
+        .then ((response) => {
+        })
+        .catch(error =>{
+            console.log("error");
+        })
+    }, [QnAs]);
 
     const currentQuestionHandler = (e) => {
         e.preventDefault();
@@ -91,6 +121,22 @@ export const MainPage = (props) => {
             setWaitQList(prevData => prevData.filter((item, i) => item.id !== id));
         });
     }
+
+    // async function addFollowUpQuestion (prevQuestion, prevAnswer, question) {
+    //     axios({
+    //         method: "POST",
+    //         url: "https://qna-restapi-dxpyj.run.goorm.site/getFUQuestion",
+    //         data: {title: String(result.data.meta[0])},
+    //         headers: {'Content-Type': 'application/json'}
+    //     })
+    //     .then ((response) => {
+    //         const res =response.data;
+    //         setQnAs(res);
+    //     })
+    //     .catch(error =>{
+    //         console.log("error");
+    //     })
+    // }
 
     function deleteQuestion (index) {
         setQnAs(prevData => prevData.filter((item, i) => i !== index));
@@ -129,13 +175,11 @@ export const MainPage = (props) => {
         if (!result.destination) {
             return;
         }
-        console.log("onDargEnd:", QnAs);
         const newQnAs = reorder(
             QnAs,
             result.source.index,
             result.destination.index
         );
-        console.log(newQnAs);
         setQnAs(newQnAs);
     }
 
@@ -156,6 +200,7 @@ export const MainPage = (props) => {
                             state = {{ 
                                 url: url,
                                 title: title,
+                                abstract: abstract,
                                 authors: authors,
                                 QnAs: QnAs,
                                 username: username
@@ -182,7 +227,7 @@ export const MainPage = (props) => {
                     <div className='subtitle'>
                         QnA
                     </div>
-                    <DragDropContext className='questionContainer' onDragEnd={onDragEnd}>
+                    <DragDropContext onDragEnd={onDragEnd}>
                         { (QnAs.length === 0 && waitQList.length === 0) ? <div className='noQuestion'>No Question</div> 
                             :
                             <Droppable droppableId="droppable">
@@ -191,6 +236,7 @@ export const MainPage = (props) => {
                                         {...provided.droppableProps}
                                         ref={provided.innerRef}
                                         // style={getListStyle(snapshot.isDraggingOver)}
+                                        className='questionContainer'
                                     >
                                     {QnAs.map((QnA, index) => (
                                         <Draggable key={String(QnA.question + index)} draggableId={String(QnA.question + index)} index={index}>
@@ -199,7 +245,7 @@ export const MainPage = (props) => {
                                                 ref={provided.innerRef}
                                                 {...provided.draggableProps}
                                                 >
-                                                    <Questionbox key={index} id={String(QnA.question + index)} question={QnA.question} answer={QnA.answer} isPublic={QnA.isPublic} updateAnswer={(newAnswer)=>updateAnswer(index, newAnswer)} updatePublic={(isPublic)=>updatePublic(index, isPublic)} deleteQuestion={() => deleteQuestion(index)} handle={provided.dragHandleProps}/>
+                                                    <Questionbox key={index} keyvalue={index} id={String(QnA.question + index)} question={QnA.question} answer={QnA.answer} isPublic={QnA.isPublic} updateAnswer={(newAnswer)=>updateAnswer(index, newAnswer)} updatePublic={(isPublic)=>updatePublic(index, isPublic)} deleteQuestion={() => deleteQuestion(index)} handle={provided.dragHandleProps}/>
                                                 </div>
                                             )}
                                         </Draggable>

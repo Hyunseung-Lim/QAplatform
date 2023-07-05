@@ -8,6 +8,10 @@ export const Questionbox = (props) => {
     const [isEdit, setIsEdit] = useState(false);
     const [isPublic, setIsPublic] = useState(false);
     // const [isWaitAnswer, setIsWaitAnswer] = useState(false);
+    const [isFoucs, setIsFocus] = useState(false);
+    const [followUpQusetions, setfollowUpQuestions] = useState(["follow up questions?", "hi", "nice to meet you"]);
+    const [followClicked, setFollowClicked] = useState(false);
+    const [followQuestion, setFollowQuestion] = useState("");
     const [prevAnswer, setPrevAnswer] = useState("");
     const [currentAnswer, setCurrentAnser] = useState("");
     const textAreaRef = useRef(null);
@@ -64,8 +68,21 @@ export const Questionbox = (props) => {
         setIsPublic(!isPublic);
     }
 
+    const handleFocus = () => {
+        setIsFocus(true);
+    };
+    
+    const handleBlur = () => {
+        setIsFocus(false);
+    };
+
+    const requestFollowUpQuestion = (question) => {
+        setFollowQuestion(question);
+        setFollowClicked(true);
+    }
+
     return(
-        <>
+        <div key={props.keyvalue} tabIndex="0" onFocus={handleFocus} onBlur={handleBlur}>
             <div className='questionbox'>
                 <div className='contatiner'>
                     <div className='questionbar'>
@@ -114,8 +131,20 @@ export const Questionbox = (props) => {
                             
                     </div>
                 </div>
-                <img key={props.id} className='handle' src="images/handle.svg" alt="handle" {...props.handle}/>
+                <img key={props.id} tabIndex="0" className='handle' src="images/handle.svg" alt="handle" {...props.handle} onMouseDown={handleBlur} onMouseUp={handleFocus}/>
             </div>
-        </>
+                {/* <div className='followUpQuestionContainer'>
+                    {followClicked ? 
+                        <div className='tempoQuestionbox'>
+                            <div className='questionbar'>{followQuestion}</div>
+                            <div className='answerbox'>Answer is being generated...</div>
+                        </div>
+                    :
+                        (isFoucs ? 
+                            (followUpQusetions.map((question, index) => (<div key={index} className='followUpQuestion' onClick={() => requestFollowUpQuestion(question)}>{question}</div>)))
+                        :null)
+                    }
+                </div>  */}
+        </div>
     )
 }
