@@ -227,7 +227,7 @@
     background-color: #525ed1;
 }
 
-.mainPage > .container > .recommendContainer > .loading {
+.loading {
     margin: 20px 0 10px;
     width: 32px;
     height: 32px;

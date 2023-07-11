@@ -11,7 +11,60 @@
 
 .recommendquestionbox > .recommendquestion {
     text-align: left;
-    width: 92%;
+    width: 90%;
+    line-height: 1.5;
+}
+
+.recommendquestionbox > .decreaseWidth {
+    display: flex;
+    align-items: center;
+    width: 84%;
+}
+
+.recommendquestionbox > .recommendquestion > .editQuestion {
+    width: 100%;
+    padding: 0px;
+    overflow: hidden;
+    resize: none;
+    border: none;
+    outline: none;
+    background-color: white;
+    font-size: 16px;
+    font-family: 'Inter';
+}
+
+.recommendquestionbox > .editBtns {
+    margin-top: 2px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.recommendquestionbox > .editBtns > .cancelBtn {
+    margin-right: 8px;
+    padding: 4px 12px;
+    border-radius: 6px;
+    border: solid 1px #969696;
+    background-color: white;
+    color: #969696;
+    font-size: 14px;
+    font-family: 'Inter';
+}
+
+.recommendquestionbox > .editBtns > .completeBtn {
+    padding: 6px 14px;
+    border-radius: 6px;    
+    border: none;
+    background-color: #A42C25;
+    color: white;
+    font-size: 14px;
+    font-family: 'Inter';
+}
+
+.recommendquestionbox > .recommendquestion > .edit {
+    margin: auto;
+    padding-left: 8px;
+    width: 13px;
+    height: 13px;
 }
 
 .recommendquestionbox > .addBtn {
