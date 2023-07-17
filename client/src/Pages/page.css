@@ -206,8 +206,19 @@
     align-items: center;
     width: 100%;
 }
-.mainPage > .container > .recommendContainer > .recommendBtn {
+
+.mainPage > .container > .recommendContainer > .recommendBtnContainer {
     margin: 10px 0 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+
+.mainPage > .container > .recommendContainer > .recommendBtnContainer > .recommendBtn {
+    margin: 0 20px;
     border: 0;
     border-radius: 8px;
     color: white;
@@ -219,7 +230,7 @@
     font-family: 'Inter';
 }
 
-.mainPage > .container > .recommendContainer > .recommendBtn:hover {
+.mainPage > .container > .recommendContainer > .recommendBtnContainer > .recommendBtn:hover {
     background-color: #525ed1;
 }
 

@@ -37,9 +37,11 @@ export const MainPage = (props) => {
     const[authors, setAuthors] = useState("");
     const[currentQuestion, setCurrentQuestion] = useState("");
     const[recommendQs, setRecommendQs] = useState([]);
+    const[recommendQTurn, setRecommendQTurn] = useState(0);
     const[loadRQs, setLoadRQs] = useState(false);
     const[QnAs, setQnAs] = useState([]);
     const[waitQList, setWaitQList] = useState([]);
+    const[viewerprompt, setViewerprompt] = useState("");
 
     useEffect(() => {
         const load_data = async () => {
@@ -78,7 +80,11 @@ export const MainPage = (props) => {
         axios({
             method: "POST",
             url: "https://qna-restapi-dxpyj.run.goorm.site/uploadQuestionSet",
-            data: {title: title, question_set: QnAs, user: username},
+            data: {
+                title: title, 
+                question_set: QnAs, 
+                user: username
+            },
             headers: {'Content-Type': 'application/json'}
         })
         .then ((response) => {
@@ -93,15 +99,40 @@ export const MainPage = (props) => {
         setCurrentQuestion(e.target.value);
     }
 
-    const generateQuestion = async () => {
+    // const generateQuestion = async () => {
+    //     setLoadRQs(true);
+    //     try {
+    //         const getApi = 'https://qna-restapi-dxpyj.run.goorm.site/getQuestion/' + String(url).split('/').pop();
+    //         const result = await axios(getApi);
+    //         setRecommendQTurn(recommendQTurn + 1);
+    //         setRecommendQs(result.data.questions);
+    //     } catch (error) {
+    //         console.error('Error:', error);
+    //     }
+    //     setLoadRQs(false);
+    // }
+
+    async function generateRecommendQuestion (endpoint) {
         setLoadRQs(true);
-        try {
-            const getApi = 'https://qna-restapi-dxpyj.run.goorm.site/getQuestion/' + String(url).split('/').pop();
-            const result = await axios(getApi);
-            setRecommendQs(result.data.questions);
-        } catch (error) {
+        await axios({
+            method: "POST",
+            url:"https://qna-restapi-dxpyj.run.goorm.site/" + endpoint + "/",
+            data: { 
+                url: String(url).split('/').pop(), 
+                turn: recommendQTurn,
+                added: QnAs.map(QnA => QnA.question),
+                viewer: viewerprompt
+            },
+            headers: {'Content-Type': 'application/json'}
+        })
+        .then((response) => {
+            const res =response.data;
+            setRecommendQs(res.questions);
+            setRecommendQTurn(recommendQTurn + 1);
+        })
+        .catch(error => {
             console.error('Error:', error);
-        }
+        });
         setLoadRQs(false);
     }
 
@@ -253,7 +284,10 @@ export const MainPage = (props) => {
                         Question Recommendation
                     </div>
                     <div className='recommendContainer'>
-                        <button className='recommendBtn' disabled={loadRQs} onClick={generateQuestion}>Recommend Question</button>
+                        <div className='recommendBtnContainer'>
+                            <button className='recommendBtn' disabled={loadRQs} onClick={() => generateRecommendQuestion('getQuestion')}>Recommend General Question</button>
+                            <button className='recommendBtn' disabled={loadRQs} onClick={() => generateRecommendQuestion('getAuthorQuestion')}>Recommend Author Custom Question</button>                            
+                        </div>
                         {loadRQs ? <img className='loading' src="images/loading.gif" alt="loading" /> : recommendQs.map((rQ, index) => (<Recommendquestion key={index} question={rQ} addRecommendQuestion={() => addRecommendQuestion(rQ, index)} updateRecommendQuestion={(updateQ) => updateRecommendQuestion(index, updateQ)}/>))}
                     </div>
                     <div className='subtitle'>
