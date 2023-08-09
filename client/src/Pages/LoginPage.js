@@ -8,7 +8,7 @@ import './page.css'
 export const LoginPage = (props) => {
 
     const[username, setUsername] = useState("");
-    const[userinfo, setUserInfo] = useState("");
+    const[userScholarID, setUserScholarID] = useState("");
     const[password, setPassword] = useState("test01");
     const[url, setUrl] = useState("https://arxiv.org/abs/1706.03762");
 
@@ -17,9 +17,9 @@ export const LoginPage = (props) => {
         setUsername(e.target.value);
     }
 
-    const userinfoHandler = (e) => {
+    const userIDHandler = (e) => {
         e.preventDefault();
-        setUserInfo(e.target.value);
+        setUserScholarID(e.target.value);
     }
 
     const passwordHandler = (e) => {
@@ -46,12 +46,12 @@ export const LoginPage = (props) => {
                 </div>
                 <div className='loginBox'>
                     <input value={username} onChange={usernameHandler} placeholder='Enter your name'></input>
-                    <input value={userinfo} onChange={userinfoHandler} placeholder='Enter the semantic scholar link'></input>
+                    <input value={userScholarID} onChange={userIDHandler} placeholder='Enter the semantic scholar link'></input>
                     <input value={url} onChange={urlHandler} placeholder='Enter the arxiv link of your paper'></input>
                     <input value={password} onChange={passwordHandler} placeholder='Enter password'></input>
                     <Link 
                         to = {password === 'test01' ? '/main' : '/'}
-                        state = {{ url: url, username: username, userinfo: userinfo }} 
+                        state = {{ url: url, username: username, userScholarID: userScholarID }} 
                         className='submitbutton'
                     >
                         <div>Submit</div>

@@ -77,6 +77,15 @@
     align-items: center;
 }
 
+.mainPage > .loadingContainer {
+    height: calc(100vh - 50px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: 700;
+}
+
 .mainPage > .container {
     display: flex;
     flex-direction: column;
@@ -222,6 +231,7 @@
     display: flex;
     flex-direction: column;
     align-items: left;
+    position: relative;
 }
 
 .setting {

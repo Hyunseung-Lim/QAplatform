@@ -35,10 +35,13 @@ export const Qgenerationsetting = (props) => {
     return(
         <>
             <div className='qgenerationsetting'>
-                <button onClick={close}>close</button>
-                <div>Additional Prompt</div>
-                <textarea value={currentPrompt} onChange={currentPromptHandler}/>
-                <button onClick={savePrompt}>save</button>
+                <div className='titleContainer'>
+                    <img className='closeBtn' src="images/x.png" alt="x" onClick={close}/>
+                    <div className='title'>Additional Prompt</div>
+                    <div className='placeHolder'></div>  
+                </div>
+                <textarea value={currentPrompt} placeholder='Write the prompt you want to ask the question generation model.' onChange={currentPromptHandler}/>
+                <button className='saveBtn' onClick={savePrompt}>Save</button>
             </div>
         </>
     )
