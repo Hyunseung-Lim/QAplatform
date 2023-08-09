@@ -5,6 +5,8 @@ import axios from 'axios';
 
 import { Topbar } from '../Components/Topbar/topbar';
 import { Questionbox } from '../Components/Questionbox/questionbox';
+import { Qgenerationsetting } from '../Components/Qgenerationsetting/qgenerationsetting';
+
 import { Recommendquestion } from '../Components/Recommendquestion/recommendquestion';
 import './page.css'
 
@@ -42,6 +44,7 @@ export const MainPage = (props) => {
     const[QnAs, setQnAs] = useState([]);
     const[waitQList, setWaitQList] = useState([]);
     const[viewerprompt, setViewerprompt] = useState("");
+    const[isQsetting, setIsQsetting] = useState(false);
 
     useEffect(() => {
         const load_data = async () => {
@@ -246,6 +249,18 @@ export const MainPage = (props) => {
         setQnAs(newQnAs);
     }
 
+    function openSetting () {
+        setIsQsetting(true);
+    }
+    
+    function closeSetting () {
+        setIsQsetting(false);
+    }
+
+    function updatePrompt (prompt) {
+        setViewerprompt(prompt);
+    }
+
     return(
         <>
             <div className='mainPage'>
@@ -273,25 +288,35 @@ export const MainPage = (props) => {
                             <div>Preview</div>
                         </Link>
                     </div>
-                    <div className='subtitle'>
-                        Add Question
+                    <div className='subtitleContainer'>
+                        <div className='subtitle'>
+                            Add Question
+                        </div>    
                     </div>
                     <div className='inputContainer'>
                         <input value={currentQuestion} onChange={currentQuestionHandler} placeholder='Type Your Own Question'></input>
                         <button onClick={addCurrentQuestion}>Add +</button>
                     </div>
-                    <div className='subtitle'>
-                        Question Recommendation
+                    <div className='subtitleContainer'>
+                        <div className='subtitle'>
+                            Question Recommendation
+                        </div>    
+                        <div className='settingContainer'>
+                            <img className='setting' src="images/setting.png" alt="setting" onClick={openSetting}/>
+                            <Qgenerationsetting viewerprompt={viewerprompt} isQsetting={isQsetting} closeSetting={closeSetting} updatePrompt={(prompt) => updatePrompt(prompt)}/>
+                        </div>
                     </div>
                     <div className='recommendContainer'>
                         <div className='recommendBtnContainer'>
-                            <button className='recommendBtn' disabled={loadRQs} onClick={() => generateRecommendQuestion('getQuestion')}>Recommend General Question</button>
-                            <button className='recommendBtn' disabled={loadRQs} onClick={() => generateRecommendQuestion('getAuthorQuestion')}>Recommend Author Custom Question</button>                            
+                            <button className='recommendBtn' disabled={loadRQs} onClick={() => generateRecommendQuestion('getQuestion')}>General Question</button>
+                            <button className='recommendBtn' disabled={loadRQs} onClick={() => generateRecommendQuestion('getAuthorQuestion')}>Personalized Question</button>
                         </div>
                         {loadRQs ? <img className='loading' src="images/loading.gif" alt="loading" /> : recommendQs.map((rQ, index) => (<Recommendquestion key={index} question={rQ} addRecommendQuestion={() => addRecommendQuestion(rQ, index)} updateRecommendQuestion={(updateQ) => updateRecommendQuestion(index, updateQ)}/>))}
                     </div>
-                    <div className='subtitle'>
-                        QnA
+                    <div className='subtitleContainer'>
+                        <div className='subtitle'>
+                            QnA
+                        </div>    
                     </div>
                     <DragDropContext onDragEnd={onDragEnd}>
                         { (QnAs.length === 0 && waitQList.length === 0) ? <div className='noQuestion'>No Question</div> 
